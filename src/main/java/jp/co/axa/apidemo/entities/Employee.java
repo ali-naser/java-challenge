@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name="EMPLOYEE")
+@Table(name = "EMPLOYEE")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,14 +30,14 @@ public class Employee implements Serializable {
 
     @NotNull(message = "error.validation.notNull")
     @Size(min = 2, max = 50, message = "error.validation.min.2.max.50")
-    @Column(name="EMPLOYEE_NAME", nullable = false)
+    @Column(name = "EMPLOYEE_NAME", nullable = false)
     private String name;
 
-    @Column(name="EMPLOYEE_SALARY")
+    @Column(name = "EMPLOYEE_SALARY")
     private Double salary;
 
     @Size(max = 50, message = "error.validation.max.50")
-    @Column(name="DEPARTMENT")
+    @Column(name = "DEPARTMENT")
     private String department;
 
     @Override
