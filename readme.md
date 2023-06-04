@@ -1,52 +1,72 @@
-### How to use this spring-boot project
+# java-challenge
+java-challenge for AXA
 
-- Install packages with `mvn package`
-- Run `mvn spring-boot:run` for starting the application (or use your IDE)
+# Tasks done
+1. Controller syntax update
+2. Bug fixing
+3. Central logger
+4. Entity update
+5. UT and IT included
+6. Cache feature implemented
+7. Improve documents and comments
+8. JWT authentication implemented
+9. Devtools implemented
 
-Application (with the embedded H2 database) is ready to be used ! You can access the url below for testing it :
+# Steps to use
+1. Run the application
+2. Create a user by using the curl:
 
-- Swagger UI : http://localhost:8080/swagger-ui.html
-- H2 UI : http://localhost:8080/h2-console
+curl --location 'localhost:8080/api/users' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userName":"alinaser",
+    "password":"123456"
+}'
 
-> Don't forget to set the `JDBC URL` value as `jdbc:h2:mem:testdb` for H2 UI.
+3. Login using folowing curl:
+curl --location 'localhost:8080/api/authenticate' \
+--header 'Content-Type: application/json' \
+--data '{
+    "userName": "alinaser",
+    "password":"123456"
+}'
 
+Result: 
+{
+    "id_token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGluYXNlciIsImV4cCI6MTY4MzY4MzQ4MiwiaWF0IjoxNjgzNjQ3NDgyfQ.P5FqkY0VBB0WLhHtaWddnQzMR0WCxOgTwFFeNMz-cVI"
+}
 
+4. Copy the id_token and set in the Authorization header of the following curl:
+curl --location 'localhost:8080/api/v1/employees' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGluYXNlciIsImV4cCI6MTY4MzY4MzQ4MiwiaWF0IjoxNjgzNjQ3NDgyfQ.P5FqkY0VBB0WLhHtaWddnQzMR0WCxOgTwFFeNMz-cVI' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name":"Kamal",
+    "department":"CSE",
+    "salary":123
+}'
 
-### Instructions
+5. Get employee by ID. Run following curl
+curl --location --request GET 'localhost:8080/api/v1/employees/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGluYXNlciIsImV4cCI6MTY4MzY4MzQ4MiwiaWF0IjoxNjgzNjQ3NDgyfQ.P5FqkY0VBB0WLhHtaWddnQzMR0WCxOgTwFFeNMz-cVI' \
+--header 'Content-Type: application/json' \
 
-- download the zip file of this project
-- create a repository in your own github named 'java-challenge'
-- clone your repository in a folder on your machine
-- extract the zip file in this folder
-- commit and push
+6. Get all employee. Run following curl
+curl --location --request GET 'localhost:8080/api/v1/employees' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGluYXNlciIsImV4cCI6MTY4MzY4MzQ4MiwiaWF0IjoxNjgzNjQ3NDgyfQ.P5FqkY0VBB0WLhHtaWddnQzMR0WCxOgTwFFeNMz-cVI' \
+--header 'Content-Type: application/json' \
 
-- Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests
-  - Change syntax
-  - Protect controller end points
-  - Add caching logic for database calls
-  - Improve doc and comments
-  - Fix any bug you might find
-- Edit readme.md and add any comments. It can be about what you did, what you would have done if you had more time, etc.
-- Send us the link of your repository.
+7. Update employee. Run following curl
+curl --location --request POST 'localhost:8080/api/v1/employees/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGluYXNlciIsImV4cCI6MTY4MzY4MzQ4MiwiaWF0IjoxNjgzNjQ3NDgyfQ.P5FqkY0VBB0WLhHtaWddnQzMR0WCxOgTwFFeNMz-cVI' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name":"Ali",
+    "department":"EEE",
+    "salary":123
+}'
 
-#### Restrictions
-- use java 8
-
-
-#### What we will look for
-- Readability of your code
-- Documentation
-- Comments in your code 
-- Appropriate usage of spring boot
-- Appropriate usage of packages
-- Is the application running as expected
-- No performance issues
-
-#### Your experience in Java
-
-Please let us know more about your Java experience in a few sentences. For example:
-
-- I have 3 years experience in Java and I started to use Spring Boot from last year
-- I'm a beginner and just recently learned Spring Boot
-- I know Spring Boot very well and have been using it for many years
+8. Delete employee. Run following curl
+curl --location --request DELETE 'localhost:8080/api/v1/employees/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGluYXNlciIsImV4cCI6MTY4MzY4MzQ4MiwiaWF0IjoxNjgzNjQ3NDgyfQ.P5FqkY0VBB0WLhHtaWddnQzMR0WCxOgTwFFeNMz-cVI' \
+--header 'Content-Type: application/json' \
